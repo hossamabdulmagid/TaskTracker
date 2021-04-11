@@ -7,7 +7,6 @@ import AddTask from './components/addtask/AddTask'
 import { useToast } from "@chakra-ui/react"
 import { doGetData, doDeleteTask } from './redux/data/dataAction'
 import { connect } from 'react-redux'
-import { FaTruckMonster } from 'react-icons/fa';
 const App = ({ doGetData, StateOfData = [], Loading, doDeleteTask }) => {
   const [showAddTask, setShowAddTask] = useState(false);
   const toast = useToast();
