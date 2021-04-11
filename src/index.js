@@ -7,12 +7,36 @@ import { BrowserRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./redux/store";
+import { ChakraProvider } from "@chakra-ui/react"
+import { extendTheme } from "@chakra-ui/react"
+
+
+const theme = extendTheme({
+  Trigger: {
+    Popover: {
+      variants: {
+        responsive: {
+          popper: {
+            maxWidth: 'unset',
+            width: 'unset',
+            maxHeight: 'unset',
+            height: 'unset'
+          }
+        }
+      }
+    }
+  }
+});
+
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <PersistGate persistor={persistor}>
         <Provider store={store}>
-          <App />
+          <ChakraProvider theme={theme} >
+            <App />
+          </ChakraProvider>
         </Provider>
       </PersistGate>
     </BrowserRouter>

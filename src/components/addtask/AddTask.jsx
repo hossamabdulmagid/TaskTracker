@@ -8,12 +8,9 @@ const AddTask = ({ onAdd }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
-
         if (!text) {
             alert(`Get in Toush to add Task....`)
         }
-
 
         onAdd({ text, day, reminder })
         setText('')
@@ -28,21 +25,24 @@ const AddTask = ({ onAdd }) => {
                     type='text'
                     placeholder='Add Task'
                     value={text}
-                    onChange={(e) => setText(e.target.value)} />
+                    onChange={(e) => setText(e.target.value)}
+                    required />
 
             </Form.Group>
-
             <Form.Group controlId="formBasicPassword">
                 <Form.Label>Day & Time</Form.Label>
                 <Form.Control
                     value={day}
+                    required
                     onChange={(e) => setDay(e.target.value)}
                     type='text'
                     placeholder='Day And Time' />
             </Form.Group>
             <Form.Group controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="set Reminder" checked={reminder}
-                    type='checkbox'
+                <Form.Check
+                    type="checkbox"
+                    label="set Reminder"
+                    checked={reminder}
                     value={reminder}
                     onChange={(e) => setReminder(e.currentTarget.checked)} />
             </Form.Group>
@@ -50,7 +50,6 @@ const AddTask = ({ onAdd }) => {
                 Submit
         </Button>
         </Form>
-
     )
 }
 
