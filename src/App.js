@@ -5,31 +5,35 @@ import Header from './components/header/Header';
 import Tasks from './components/tasks/Tasks';
 import AddTask from './components/addtask/AddTask'
 import { useToast } from "@chakra-ui/react"
-
-const App = () => {
+import { doGetData } from './redux/data/dataAction'
+import { connect } from 'react-redux'
+import { FaTruckMonster } from 'react-icons/fa';
+const App = ({ doGetData, StateOfData = [], Loading }) => {
   const [showAddTask, setShowAddTask] = useState(false);
   const toast = useToast();
-  const [tasks, setTasks] = useState(
-    [
-      {
-        id: 1,
-        text: "Doctors Appointment",
-        day: new Date(),
-        reminder: true,
-      },
-      {
-        id: 2,
-        text: "Meeting At School",
-        day: new Date(),
-        reminder: true,
-      }, {
-        id: 3,
-        text: "Food Shoping",
-        day: new Date(),
-        reminder: false,
-      }
-    ]
-  );
+  const [tasks, setTasks] = useState([]);
+
+  const [showData, setShowData] = useState(false);
+
+  useEffect(() => {
+    doGetData()
+    if (!StateOfData) {
+      return;
+    }
+    console.log(StateOfData, `StateOfData`)
+
+    if (StateOfData.length > 1 || Loading) {
+
+      setTimeout(() => {
+        setTasks([...StateOfData])
+        setShowData(true);
+
+      }, 1500);
+
+    } else {
+      setTasks([])
+    }
+  }, [doGetData])
 
   const id = uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
   console.log(id, `id????????????`)
@@ -40,7 +44,7 @@ const App = () => {
     setTasks([...tasks, newTask])
     toast({
       title: "Task Added.",
-      description: `We've Added your task  Id: ${id} Successful.`,
+      description: `We've Added your task ${id} Successful.`,
       status: "success",
       duration: 9000,
       isClosable: true,
@@ -48,11 +52,11 @@ const App = () => {
     })
   }
 
-  const deleteTask = id => {
+  const deleteTask = (id, task) => {
     setTasks(tasks.filter((task) => task.id !== id));
     toast({
       title: "Task delete.",
-      description: `We've delete your task Id:${id}.`,
+      description: `We've delete your task ${id}.`,
       status: "error",
       duration: 9000,
       isClosable: true,
@@ -87,5 +91,13 @@ const App = () => {
     </Fragment >
   );
 }
+const mapStateToProps = state => ({
+  StateOfData: state.data.tasks,
+  Loading: state.data.pending
+});
 
-export default App;
+
+const mapDispatchToProps = dispatch => ({
+  doGetData: () => dispatch(doGetData()),
+})
+export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -20,7 +20,7 @@ const AddTask = ({ onAdd }) => {
     return (
         <Form onSubmit={handleSubmit}>
             <Form.Group controlId="formBasicEmail">
-                <Form.Label>tasks</Form.Label>
+                <Form.Label>Tasks</Form.Label>
                 <Form.Control
                     type='text'
                     placeholder='Add Task'
@@ -41,7 +41,7 @@ const AddTask = ({ onAdd }) => {
             <Form.Group controlId="formBasicCheckbox">
                 <Form.Check
                     type="checkbox"
-                    label="set Reminder"
+                    label="Set Reminder"
                     checked={reminder}
                     value={reminder}
                     onChange={(e) => setReminder(e.currentTarget.checked)} />

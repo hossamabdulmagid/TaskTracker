@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-
+import dataReducers from './data/dataReducer'
 //blacklist
 const persistConfig = {
   key: "root",
@@ -11,9 +11,8 @@ const persistConfig = {
 
 //whitelist
 const rootReducer = combineReducers({
-  //lang: LanguagesReducer,
-  //Text: TextReducer,
-//  Req: requestReducer,
+  data: dataReducers,
+
 
 });
 
