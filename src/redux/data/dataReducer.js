@@ -27,6 +27,25 @@ const dataReducers = (state = INITAIL_STATE, action) => {
                 pending: false,
                 error: action.payload.error
             }
+
+
+        case DataTypeAction.DELETE_START:
+            return {
+                ...state,
+                pending: true,
+
+            }
+        case DataTypeAction.DELETE_SUCCESS:
+            return {
+                ...state,
+                pending: false,
+            }
+        case DataTypeAction.DELETE_ERROR:
+            return {
+                ...state,
+                pending: false,
+                error: action.payload.error
+            }
         default: return state;
     }
 }

@@ -5,10 +5,10 @@ import Header from './components/header/Header';
 import Tasks from './components/tasks/Tasks';
 import AddTask from './components/addtask/AddTask'
 import { useToast } from "@chakra-ui/react"
-import { doGetData } from './redux/data/dataAction'
+import { doGetData, doDeleteTask } from './redux/data/dataAction'
 import { connect } from 'react-redux'
 import { FaTruckMonster } from 'react-icons/fa';
-const App = ({ doGetData, StateOfData = [], Loading }) => {
+const App = ({ doGetData, StateOfData = [], Loading, doDeleteTask }) => {
   const [showAddTask, setShowAddTask] = useState(false);
   const toast = useToast();
   const [tasks, setTasks] = useState([]);
@@ -33,7 +33,8 @@ const App = ({ doGetData, StateOfData = [], Loading }) => {
     } else {
       setTasks([])
     }
-  }, [doGetData, StateOfData.length ])
+  }, [doGetData, StateOfData.length]);
+
 
   const id = uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
   console.log(id, `id????????????`)
@@ -53,6 +54,7 @@ const App = ({ doGetData, StateOfData = [], Loading }) => {
   }
 
   const deleteTask = (id, task) => {
+    doDeleteTask(id)
     setTasks(tasks.filter((task) => task.id !== id));
     toast({
       title: "Task delete.",
@@ -99,5 +101,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   doGetData: () => dispatch(doGetData()),
+  doDeleteTask: (id) => dispatch(doDeleteTask(id))
 })
 export default connect(mapStateToProps, mapDispatchToProps)(App);
