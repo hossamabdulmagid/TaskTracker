@@ -33,7 +33,7 @@ const App = ({ doGetData, StateOfData = [], Loading }) => {
     } else {
       setTasks([])
     }
-  }, [doGetData])
+  }, [doGetData, StateOfData.length ])
 
   const id = uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
   console.log(id, `id????????????`)
@@ -73,8 +73,8 @@ const App = ({ doGetData, StateOfData = [], Loading }) => {
       <div className="container">
         <h4>
           <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
-          {showAddTask && <AddTask onAdd={addTask} />
-          }          {tasks.length > 0 ?
+          {showAddTask && <AddTask onAdd={addTask} />}
+          {showData && tasks.length > 0 ?
             <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
             :
             <>
