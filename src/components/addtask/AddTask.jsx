@@ -1,5 +1,5 @@
 import { useState } from 'react'
-
+import { Form, Button } from 'react-bootstrap'
 const AddTask = ({ onAdd }) => {
     const [text, setText] = useState('');
     const [day, setDay] = useState('');
@@ -21,41 +21,36 @@ const AddTask = ({ onAdd }) => {
         setReminder(false);
     }
     return (
-        <form className='add-form' onSubmit={handleSubmit}>
-            <div className='form-control'>
-                <label>Task</label>
-                <input
+        <Form onSubmit={handleSubmit}>
+            <Form.Group controlId="formBasicEmail">
+                <Form.Label>tasks</Form.Label>
+                <Form.Control
                     type='text'
                     placeholder='Add Task'
                     value={text}
-                    onChange={(e) => setText(e.target.value)}
-                />
-            </div>
-            <br />
-            <div className='form-control'>
-                <label>Day & Time</label>
-                <input
+                    onChange={(e) => setText(e.target.value)} />
+
+            </Form.Group>
+
+            <Form.Group controlId="formBasicPassword">
+                <Form.Label>Day & Time</Form.Label>
+                <Form.Control
                     value={day}
                     onChange={(e) => setDay(e.target.value)}
                     type='text'
                     placeholder='Day And Time' />
-            </div>
-            <br />
-            <br />
-            <div className='form-control form-control-check'>
-                <label>Set Reminder</label>
-                <input
-                    checked={reminder}
+            </Form.Group>
+            <Form.Group controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="set Reminder" checked={reminder}
                     type='checkbox'
                     value={reminder}
-                    onChange={(e) => setReminder(e.currentTarget.checked)}
-                />
+                    onChange={(e) => setReminder(e.currentTarget.checked)} />
+            </Form.Group>
+            <Button variant="primary" type='submit' value='Save Task' className='btn btn-block'>
+                Submit
+        </Button>
+        </Form>
 
-            </div>
-
-            <br />
-            <input type='submit' value='Save Task' className='btn btn-block' />
-        </form>
     )
 }
 

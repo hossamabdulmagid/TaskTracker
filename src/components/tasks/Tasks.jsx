@@ -3,7 +3,7 @@ import Task from './Task'
 const Tasks = ({ tasks, onDelete, onToggle }) => {
     console.log(tasks, `props`)
     //    tasks.push({ id: 9, text: 'hello from sawsaw', day: new Date(), reminder: false })
-
+    
     return (
 
         <div>
