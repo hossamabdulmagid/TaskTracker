@@ -7,6 +7,7 @@ import AddTask from './components/addtask/AddTask'
 import { useToast } from "@chakra-ui/react"
 import { doGetData, doDeleteTask } from './redux/data/dataAction'
 import { connect } from 'react-redux'
+import { Rapperd } from './App.styles'
 const App = ({ doGetData, StateOfData = [], Loading, doDeleteTask }) => {
   const [showAddTask, setShowAddTask] = useState(false);
   const toast = useToast();
@@ -21,18 +22,18 @@ const App = ({ doGetData, StateOfData = [], Loading, doDeleteTask }) => {
     }
     console.log(StateOfData, `StateOfData`)
 
-    if (StateOfData.length > 1 || Loading) {
+    if (StateOfData.length > 0) {
 
       setTimeout(() => {
         setTasks([...StateOfData])
-        setShowData(true);
 
       }, 1500);
+      setShowData(true);
 
     } else {
       setTasks([])
     }
-  }, [doGetData, StateOfData.length]);
+  }, [doGetData, StateOfData, StateOfData.length]);
 
 
   const id = uuidv4(); // ⇨ '1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed'
@@ -49,7 +50,7 @@ const App = ({ doGetData, StateOfData = [], Loading, doDeleteTask }) => {
       duration: 9000,
       isClosable: true,
       position: 'top-right'
-    })
+    });
   }
 
   const deleteTask = (id, task) => {
@@ -67,28 +68,30 @@ const App = ({ doGetData, StateOfData = [], Loading, doDeleteTask }) => {
   }
 
   const toggleReminder = (id) => {
-    setTasks(tasks.map((task) => task.id === id ? { ...task, reminder: !task.reminder } : task))
+    setTasks(StateOfData.map((task) => task.id === id ? { ...task, reminder: !task.reminder } : task))
   }
   return (
     <Fragment>
-      <div className="container">
-        <h4>
-          <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
-          {showAddTask && <AddTask onAdd={addTask} />}
-          {showData && tasks.length > 0 ?
-            <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
-            :
-            <>
-              <br />
-              <br />
+      <Rapperd className="container-fluid">
+        <div className="container">
+          <h4>
+            <Header onAdd={() => setShowAddTask(!showAddTask)} showAdd={showAddTask} />
+            {showAddTask && <AddTask onAdd={addTask} />}
+            {showData && tasks.length > 0 ?
+              <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
+              :
+              <>
+                <br />
+                <br />
 
-              <Alert variant='danger' style={{ borderRadius: '15px' }}>
-                no Tasks To Show!
-          </Alert>
-            </>
-          }
-        </h4>
-      </div>
+                <Alert variant='danger' style={{ borderRadius: '15px' }}>
+                  no Tasks To Show!
+              </Alert>
+              </>
+            }
+          </h4>
+        </div>
+      </Rapperd>
     </Fragment >
   );
 }
